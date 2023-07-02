@@ -6,7 +6,6 @@ import ru.hogwarts.school.entity.Student;
 
 import java.util.Collection;
 import java.util.List;
-
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     Collection<Faculty> findFacultyByNameIgnoreCaseOrColorIgnoreCase(String faculty, String color);
 }
