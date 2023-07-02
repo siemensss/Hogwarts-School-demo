@@ -4,7 +4,7 @@ SELECT * FROM student;
 
 /*возраст между 10 и 20*/
 SELECT * FROM student
-WHERE age > 10 AND age <20;
+WHERE age BETWEEN 10 AND 20
 
 
 /*список имен всех студентов*/
