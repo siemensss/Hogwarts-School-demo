@@ -198,20 +198,13 @@ public class FacultyControllerTests {
     @Test
     public void findStudentsByFacultyIdTest() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        final String name = "empty";
-        final String color = "empty";
-        final Long id = 1L;
         final List<Student> expectedStudentsList = List.of(
                 new Student(1L, "111", 17, null),
                 new Student(2L, "222", 18, null),
                 new Student(3L, "333", 19, null)
         );
-        Faculty faculty = new Faculty();
-        faculty.setId(id);
-        faculty.setName(name);
-        faculty.setColor(color);
-        faculty.setStudents(expectedStudentsList);
-        when(studentRepository.findStudentsByFacultyId(id)).thenReturn(expectedStudentsList);
+
+        when(studentRepository.findStudentsByFacultyId(any(Long.class))).thenReturn(expectedStudentsList);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/1/students"))
                 .andExpect(status().isOk())
