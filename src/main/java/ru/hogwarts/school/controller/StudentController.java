@@ -100,10 +100,13 @@ public class StudentController {
     public ResponseEntity<Integer> getNumber() {
         return ResponseEntity.ok(studentService.getNumber());
     }
-   /* @GetMapping("/get-int-modify")
-    public ResponseEntity<Integer> getNumberModify() {
-        return ResponseEntity.ok(studentService.getNumberModify());
-    }*/
+    @GetMapping("/thread")
+    public void thread() {
+         studentService.thread();
+    } @GetMapping("/threadSync")
+    public void threadSync() {
+         studentService.threadSync();
+    }
 
 }
 
