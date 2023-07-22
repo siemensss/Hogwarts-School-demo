@@ -110,8 +110,9 @@ public class StudentService {
     public Integer getNumber() {
         return Stream
                 .iterate(1, a -> a + 1)
-                .limit(1_000_000)
+                .mapToInt(Integer::intValue)
                 .parallel()
+                .limit(1_000_000)
                 .reduce(0, Integer::sum);
     }
 
