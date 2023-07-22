@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.entity.Faculty;
 import ru.hogwarts.school.entity.Student;
@@ -52,5 +53,14 @@ public class FacultyService {
 
     public Collection<Student> findStudentsByFaculty(Long id) {
         return studentRepository.findStudentsByFacultyId(id);
+    }
+
+    public String getLongestFacultyName() {
+        return facultyRepository.findAll()
+                .stream()
+                .parallel()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse(null);
     }
 }

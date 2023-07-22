@@ -19,7 +19,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("{id}") //
+    @GetMapping("{id}")
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
@@ -28,7 +28,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping //
+    @GetMapping
     public ResponseEntity<Collection<Faculty>> findFacultiesByNameOrColor(@RequestParam(required = false) String color,
                                                                           @RequestParam(required = false) String name) {
         if (color != null && !color.isBlank()) {
@@ -40,12 +40,12 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findByColor(color));
     }
 
-    @PostMapping //
+    @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.addFaculty(faculty);
     }
 
-    @PutMapping //
+    @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty == null) {
@@ -54,7 +54,7 @@ public class FacultyController {
         return ResponseEntity.ok(foundFaculty);
     }
 
-    @DeleteMapping("{id}") //
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
@@ -63,5 +63,9 @@ public class FacultyController {
     @GetMapping("/{id}/students")
     public Collection<Student> findStudentsByFaculty(@PathVariable Long id) {
         return facultyService.findStudentsByFaculty(id);
+    }
+    @GetMapping("/longest-name")
+    public ResponseEntity<String> getLongestFacultyName() {
+        return ResponseEntity.ok(facultyService.getLongestFacultyName());
     }
 }

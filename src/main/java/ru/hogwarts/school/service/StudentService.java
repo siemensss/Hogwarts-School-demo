@@ -8,6 +8,8 @@ import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -32,7 +34,7 @@ public class StudentService {
     }
 
     public Student editStudent(Student student) {
-        LOG.info("Was invoked method for find student");
+        LOG.info("Was invoked method for edit student");
         return studentRepository.save(student);
     }
 
@@ -52,10 +54,12 @@ public class StudentService {
         return result;
 
     }
+
     public Collection<Student> findStudentsByAgeBetween(int min, int max) {
         LOG.info("Was invoked method for find students by age between student");
         return studentRepository.findStudentsByAgeBetween(min, max);
     }
+
     public Collection<Student> getAllStudents() {
         LOG.info("Was invoked method for get all students");
         return studentRepository.findAll();
@@ -63,9 +67,9 @@ public class StudentService {
 
     public Faculty findFaculty(Long id) {
         LOG.info("Was invoked method for find faculty");
-       return studentRepository.findById(id)
-               .map(Student::getFaculty)
-               .get();
+        return studentRepository.findById(id)
+                .map(Student::getFaculty)
+                .get();
     }
 
     public Integer getCountStudents() {
@@ -82,4 +86,34 @@ public class StudentService {
         LOG.info("Was invoked method for get last five students");
         return studentRepository.getLastFiveStudents();
     }
+
+    public Collection<String> findNamesByFirstLetter(char letter) {
+        char upperCase = Character.toUpperCase(letter);
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .map(Student::getName)
+                .filter(s -> s.startsWith(Character.toString(upperCase)))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public Double getAverageAgeStudentsWithStream() {
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .mapToInt(Student::getAge)
+                .average()
+                .getAsDouble();
+    }
+
+    public Integer getNumber() {
+        return Stream
+                .iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, Integer::sum);
+    }
+
+
 }
