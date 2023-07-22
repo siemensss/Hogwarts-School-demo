@@ -86,5 +86,24 @@ public class StudentController {
     public List<Student> lastFiveStudents(){
         return studentService.getLastFiveStudents();
     }
+
+    @GetMapping("/get-names")
+    public ResponseEntity<Collection<String>> findNamesByFirstLetter(@RequestParam (required = false) char letter) {
+        return ResponseEntity.ok(studentService.findNamesByFirstLetter(letter));
+    }
+    @GetMapping("/get-average-age-stream")
+    public ResponseEntity<Double> getAverageAgeStudentsWithStream() {
+        return ResponseEntity.ok(studentService.getAverageAgeStudentsWithStream());
+    }
+
+    @GetMapping("/get-int")
+    public ResponseEntity<Integer> getNumber() {
+        return ResponseEntity.ok(studentService.getNumber());
+    }
+   /* @GetMapping("/get-int-modify")
+    public ResponseEntity<Integer> getNumberModify() {
+        return ResponseEntity.ok(studentService.getNumberModify());
+    }*/
+
 }
 
