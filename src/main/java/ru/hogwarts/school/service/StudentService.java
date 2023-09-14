@@ -117,4 +117,53 @@ public class StudentService {
     }
 
 
+    public void thread() {
+        List<Student> students = studentRepository.findAll();
+
+        printStudentName(students.get(0));
+        printStudentName(students.get(1));
+
+
+        new Thread(() -> {
+            printStudentName(students.get(2));
+            printStudentName(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudentName(students.get(4));
+            printStudentName(students.get(5));
+        }).start();
+    }
+
+    public void threadSync() {
+        List<Student> students = studentRepository.findAll();
+
+        printStudentNameSync(students.get(0));
+        printStudentNameSync(students.get(1));
+
+
+        new Thread(() -> {
+            printStudentNameSync(students.get(2));
+            printStudentNameSync(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudentNameSync(students.get(4));
+            printStudentNameSync(students.get(5));
+        }).start();
+    }
+
+    private void printStudentName(Student student) {
+        try {
+            Thread.sleep(1000);
+            LOG.info(student.getName());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private synchronized void printStudentNameSync(Student student) {
+        printStudentName(student);
+    }
 }
+
